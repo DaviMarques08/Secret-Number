@@ -33,18 +33,20 @@ exibirMensagemInicial()
 
 function verificarChute() {
 
-    let chute = document.querySelector('input').value
+    let inputValor = document.querySelector('.container__input').value.trim();
 
-    if (chute === '') {
+    if (inputValor === '' || isNaN(Number(inputValor))) {
         exibirNaTela('.texto__paragrafo', 'Valor invalido, escolha um numero entre 1 e 100 e tente novamente');
         return
     }
+
+    let chute = parseInt(inputValor, 10);
 
     tentativas++;
 
     verificarTentativas()
 
-    if (chute == numeroSecreto) {
+    if (chute === numeroSecreto) {
         exibirNaTela('h1', 'Acertou')
         exibirNaTela('.texto__paragrafo', `Parabens voce acertou o numero secreto ${numeroSecreto}`)
         document.querySelector('#reiniciar').disabled = false
