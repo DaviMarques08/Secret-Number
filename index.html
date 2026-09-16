@@ -24,9 +24,14 @@
         </div>
     </div>
 
-    <div class="container">
+    <div class="container"> 
+        <div class="container_butoes"> //Falta implementar a função dos botões 
+                    <button onclick="rank()" class="btn-rank" id="user-rank">Ranking</button> // função pra mostrar os rank dos usuarios
+                    <button onclick="user()" class="btn-user" id="troca-user">Trocar User</button> // função pra trocar o usuario 
+            </div>
         <div class="container__conteudo">
             <div class="container__informacoes">
+               
                 <div class="container__texto">
                     <h1></h1>
                     <h2 id="tentativas"></h2>
@@ -41,9 +46,6 @@
             <img src="./img/ia.png" alt="Uma pessoa olhando para a esquerda" class="container__imagem-pessoa" />
         </div>
     </div>
-
-
-
 
     <script src="app.js" defer></script>
 </body>

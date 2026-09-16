@@ -3,6 +3,22 @@ let numeroLimite = 100
 let numeroSecreto = gerarNumero()
 let tentativas = 0
 
+let campoInput = document.querySelector('.container__input');
+campoInput.addEventListener('keydown', function(event) {
+    if(event.key === 'Enter' && !campoInput.disabled) {
+        verificarChute()
+    }
+})
+
+let inputNomeModal = document.querySelector('#input-nome');
+if(inputNomeModal) {
+    inputNomeModal.addEventListener('keydown', function(event) {
+        if(event.key === 'Enter') {
+            salvarNome();
+        }
+    })
+}
+
 function exibirNaTela(tag, texto) {
     let campo = document.querySelector(tag);
     campo.innerHTML = texto;
@@ -51,6 +67,7 @@ function verificarChute() {
         exibirNaTela('.texto__paragrafo', `Parabens voce acertou o numero secreto ${numeroSecreto}`)
         document.querySelector('#reiniciar').disabled = false
         document.querySelector('#chute').disabled = true
+        document.querySelector('.container__input').disabled = true
     } else {
         if (chute > numeroSecreto) {
             exibirNaTela('.texto__paragrafo', 'numero secreto é menor')
@@ -76,6 +93,7 @@ function gerarNumero() {
     }
 }
 
+
 function novojogo() {
     numeroSecreto = gerarNumero()
     tentativas = 0
@@ -84,8 +102,13 @@ function novojogo() {
 
     verificarTentativas()
 
-    document.querySelector('input').value = ''
-    document.querySelector('input').focus()
+    let input = document.querySelector('.container__input');
+    input.value = ''
+    input.disabled = false
+    input.focus()
+
+    document.querySelector('.container__input').value = ''
+    document.querySelector('.container__input').focus()
     document.querySelector('#reiniciar').disabled = true
     document.querySelector('#chute').disabled = false
 }
