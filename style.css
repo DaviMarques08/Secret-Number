@@ -192,11 +192,12 @@ button:disabled {
 
 .container_butoes button {
     padding: 8px 16px;
-    font-size: 11px;
+    font-size: 13px;
     border-radius: 8px;
     background: #1875E8;
     border: 1px solid rgba(255, 255, 255, 0.2);
     transition: transform 0.2s ease, background-color 0.2s ease;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 .container_butoes button:hover {
@@ -230,5 +231,9 @@ button:disabled {
 
     .container__informacoes {
         padding: 1rem
+    }
+
+    .container_butoes {
+        transform: translateX(-30%);
     }
 }

@@ -51,7 +51,7 @@ function verificarChute() {
 
     let inputValor = document.querySelector('.container__input').value.trim();
 
-    if (inputValor === '' || isNaN(Number(inputValor))) {
+    if (inputValor === '' || isNaN(Number(inputValor)) || inputValor > 100 || inputValor < 1) {
         exibirNaTela('.texto__paragrafo', 'Valor invalido, escolha um numero entre 1 e 100 e tente novamente');
         return
     }
@@ -133,4 +133,39 @@ function salvarNome() {
     document.querySelector('#modal-nome').classList.add('escondido');
 
     exibirNaTela('h1', `Olá, ${nomeDigitado} Bem vindo ao jogo do número secreto`);
+}
+
+function salvarResultadoNoRanking(tentativas) {
+    const usuarioAtual = localStorage.getItem("nomeJogador");
+    if(!usuarioAtual) return;
+
+    let ranking = JSON.parse(localStorage.getItem("ranking")) || []; //Procura o rank se nao existir retorna uma lista vazia
+
+    const jogadorExistente = ranking.find(jogador => jogador.nome === usuarioAtual); //Verifica se o usuario existe
+
+    if(jogadorExistente) {
+        if(tentativas < jogadorExistente.melhorPontuacao) {
+            jogadorExistente.melhorPontuacao = tentativas; // verifica a pontuaçao e atualiza 
+        } 
+    }else {
+            ranking.push ({
+                nome: usuarioAtual,
+                melhorPontuacao: tentativas
+            }); //se for a primeira vez do usuario ele adiciona ele na lista
+        }
+    localStorage.setItem("ranking", JSON.stringify(ranking)) //salva o ranking atualizado de volta no localstorage;
+} 
+
+function user() {
+    localStorage.removeItem("usuarioAtual"); //Remove o usuario atual
+
+    const modal = document.getElementById("modal-nome"); // reabre o input do usuario
+    if(modal) {
+        modal.classList.remove("escondido")
+    }
+     const inputNome = document.getElementById("#input-nome"); // limpa o input
+     if(inputNome) {
+        inputNome.value = "";
+        inputNome.focus();
+     }
 }
