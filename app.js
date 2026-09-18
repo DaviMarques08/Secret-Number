@@ -65,6 +65,9 @@ function verificarChute() {
     if (chute === numeroSecreto) {
         exibirNaTela('h1', 'Acertou')
         exibirNaTela('.texto__paragrafo', `Parabens voce acertou o numero secreto ${numeroSecreto}`)
+
+        salvarResultadoNoRanking(tentativas);
+
         document.querySelector('#reiniciar').disabled = false
         document.querySelector('#chute').disabled = true
         document.querySelector('.container__input').disabled = true
@@ -168,4 +171,53 @@ function user() {
         inputNome.value = "";
         inputNome.focus();
      }
+}
+
+function rank() {
+    const rankDiv = document.getElementById("rank-users");
+
+    if(rankDiv.classList.contains("Ativo")) {
+        rankDiv.classList.remove("Ativo");
+        return;
+    }
+
+    let ranking = JSON.parse(localStorage.getItem("ranking")) || [];
+    
+    ranking.sort((a,b) => a.melhorPontuacao - b.melhorPontuacao)
+
+    let htmlContent = `
+        <div class="rank-card">
+            <button class="fechar-rank" onclick="fecharRank()">&times;</button>
+            <h2>🏆 Ranking dos Jogadores</h2>
+            <ul class="rank-lista">
+    `;
+
+    if (ranking.length === 0) {
+        htmlContent += `<li class="rank-item-vazio">Nenhum registro ainda!</li>`;
+    } else {
+        ranking.forEach((jogador, index) => {
+            htmlContent += `
+                <li class="rank-item">
+                    <span class="rank-posicao">#${index + 1}</span>
+                    <span class="rank-nome">${jogador.nome}</span>
+                    <span class="rank-pontos">${jogador.melhorPontuacao} ${jogador.melhorPontuacao === 1 ? 'tentativa' : 'tentativas'}</span>
+                </li>
+            `;
+        });
+    }
+
+    htmlContent += `
+            </ul>
+        </div>
+    `;
+
+    rankDiv.innerHTML = htmlContent;
+    rankDiv.classList.add("ativo");
+}
+
+function fecharRank() {
+    const rankDiv = document.getElementById("rank-users");
+    if (rankDiv) {
+        rankDiv.classList.remove("ativo");
+    }
 }
